@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "expToken",
+      "type": "java.lang.String",
+      "description": "Description for expToken."
+  }
+] }
