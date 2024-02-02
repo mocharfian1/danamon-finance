@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog logicalFilePath="db.changelog-1.0.xml" xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet  id="1"  author="Arfian">
+        <createTable tableName="account">
+            <column  name="id"  type="bigint"  autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column  name="username"  type="varchar(50)">
+                <constraints unique="true" uniqueConstraintName="account_username" />
+            </column>
+            <column  name="password"  type="varchar(50)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet  id="2"  author="Arfian">
+        <createTable tableName="session">
+            <column  name="id"  type="bigint"  autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column  name="accountId"  type="bigint" />
+            <column  name="username"  type="varchar(50)" />
+            <column  name="token"  type="varchar(50)"/>
+            <column  name="createdAt"  type="varchar(50)"/>
+            <column  name="expired"  type="varchar(50)"/>
+            <column  name="used"  type="boolean" defaultValueBoolean="false"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet  id="3"  author="Arfian">
+        <createTable tableName="balance">
+            <column  name="id"  type="bigint"  autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column  name="accountId"  type="bigint" />
+            <column  name="username"  type="varchar(50)"/>
+            <column  name="balance"  type="double"/>
+            <column  name="updatedAt"  type="timestamptz"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet  id="4"  author="Arfian">
+        <createTable tableName="transaction">
+            <column  name="id"  type="bigint"  autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column  name="accountId"  type="bigint" />
+            <column  name="username"  type="varchar(50)"/>
+            <column  name="lastBalance"  type="double"/>
+            <column  name="typeTrx"  type="varchar(10)"/>
+            <column  name="trxTo"  type="varchar(255)"/>
+            <column  name="updatedAt"  type="timestamptz"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet  id="5"  author="Arfian">
+        <createTable tableName="typeTrx">
+            <column  name="id"  type="int"  autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column  name="code"  type="varchar(10)" />
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
