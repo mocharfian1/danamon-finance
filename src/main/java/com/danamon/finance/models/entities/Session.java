@@ -8,25 +8,25 @@ public class Session {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
-    @Column(name = "accountId")
-    Long accountId;
+    @Column(name = "account_id")
+    private Long account_id;
 
     @Column(name = "username")
-    String username;
+    private String username;
 
     @Column(name = "token")
-    String token;
+    private String token;
 
-    @Column(name = "createdAt")
-    String createdAt;
+    @Column(name = "created_at")
+    private String created_at;
 
     @Column(name = "expired")
-    String expired;
+    private String expired;
 
     @Column(name = "used")
-    Boolean used;
+    private Boolean used;
 
 
     public Long getId() {
@@ -37,12 +37,12 @@ public class Session {
         this.id = id;
     }
 
-    public Long getAccountId() {
-        return accountId;
+    public Long getAccount_id() {
+        return account_id;
     }
 
-    public void setAccountId(Long accountId) {
-        this.accountId = accountId;
+    public void setAccount_id(Long account_id) {
+        this.account_id = account_id;
     }
 
     public String getUsername() {
@@ -61,12 +61,12 @@ public class Session {
         this.token = token;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
+    public String getCreated_at() {
+        return created_at;
     }
 
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 
     public String getExpired() {

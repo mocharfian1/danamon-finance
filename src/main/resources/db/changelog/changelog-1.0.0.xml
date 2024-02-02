@@ -20,10 +20,10 @@
             <column  name="id"  type="bigint"  autoIncrement="true">
                 <constraints primaryKey="true" nullable="false" />
             </column>
-            <column  name="accountId"  type="bigint" />
+            <column  name="account_id"  type="bigint" />
             <column  name="username"  type="varchar(50)" />
             <column  name="token"  type="varchar(50)"/>
-            <column  name="createdAt"  type="varchar(50)"/>
+            <column  name="created_at"  type="varchar(50)"/>
             <column  name="expired"  type="varchar(50)"/>
             <column  name="used"  type="boolean" defaultValueBoolean="false"/>
         </createTable>
@@ -34,10 +34,10 @@
             <column  name="id"  type="bigint"  autoIncrement="true">
                 <constraints primaryKey="true" nullable="false" />
             </column>
-            <column  name="accountId"  type="bigint" />
+            <column  name="account_id"  type="bigint" />
             <column  name="username"  type="varchar(50)"/>
             <column  name="balance"  type="double"/>
-            <column  name="updatedAt"  type="timestamptz"/>
+            <column  name="updated_at"  type="timestamptz"/>
         </createTable>
     </changeSet>
 
@@ -46,17 +46,17 @@
             <column  name="id"  type="bigint"  autoIncrement="true">
                 <constraints primaryKey="true" nullable="false" />
             </column>
-            <column  name="accountId"  type="bigint" />
+            <column  name="account_id"  type="bigint" />
             <column  name="username"  type="varchar(50)"/>
-            <column  name="lastBalance"  type="double"/>
-            <column  name="typeTrx"  type="varchar(10)"/>
-            <column  name="trxTo"  type="varchar(255)"/>
-            <column  name="updatedAt"  type="timestamptz"/>
+            <column  name="last_balance"  type="double"/>
+            <column  name="type_trx"  type="varchar(10)"/>
+            <column  name="trx_to"  type="varchar(255)"/>
+            <column  name="updated_at"  type="timestamptz"/>
         </createTable>
     </changeSet>
 
     <changeSet  id="5"  author="Arfian">
-        <createTable tableName="typeTrx">
+        <createTable tableName="type_trx">
             <column  name="id"  type="int"  autoIncrement="true">
                 <constraints primaryKey="true" nullable="false" />
             </column>

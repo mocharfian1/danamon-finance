@@ -28,7 +28,7 @@ public class AccountService {
             LoginResponseModel loginResponseModel = new LoginResponseModel();
             Session session = saveSession(account);
 
-            loginResponseModel.setAccountId(session.getAccountId());
+            loginResponseModel.setAccountId(session.getAccount_id());
             loginResponseModel.setUsername(session.getUsername());
             loginResponseModel.setToken(session.getToken());
             loginResponseModel.setExpired(session.getExpired());
@@ -40,12 +40,12 @@ public class AccountService {
 
     private Session saveSession(Account account){
         Session session = new Session();
-        session.setAccountId(account.getId());
+        session.setAccount_id(account.getId());
         session.setUsername(account.getUsername());
         long timestamp = new Date().getTime() / 1000;
         System.out.println(timestamp);
         session.setToken(Base64.getEncoder().encodeToString((session.getUsername() + timestamp).getBytes()));
-        session.setCreatedAt(String.valueOf(timestamp));
+        session.setCreated_at(String.valueOf(timestamp));
         session.setExpired(String.valueOf(timestamp + 3600));
         session.setUsed(true);
 
