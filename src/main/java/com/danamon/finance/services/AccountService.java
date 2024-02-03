@@ -1,14 +1,14 @@
 package com.danamon.finance.services;
 
+import com.danamon.finance.models.AccountInfoModel;
 import com.danamon.finance.models.LoginResponseModel;
+import com.danamon.finance.models.RekInfo;
+import com.danamon.finance.models.RekInfo;
 import com.danamon.finance.models.entities.Account;
 import com.danamon.finance.models.entities.Balance;
 import com.danamon.finance.models.entities.Rekening;
 import com.danamon.finance.models.entities.Session;
-import com.danamon.finance.repositories.AccountRepository;
-import com.danamon.finance.repositories.BalanceRepository;
-import com.danamon.finance.repositories.RekeningRepository;
-import com.danamon.finance.repositories.SessionRepository;
+import com.danamon.finance.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +28,9 @@ public class AccountService {
 
     @Autowired
     private RekeningRepository rekeningRepository;
+
+    @Autowired
+    private RekeningInformationRepository rekeningInformationRepository;
 
     public LoginResponseModel login(String username, String password){
 
@@ -74,17 +77,16 @@ public class AccountService {
         balance.setAccount_id(account.getId());
         balance.setRekening_id(rekening.getId());
         balance.setUsername(account.getUsername());
-        balance.setBalance(0L);
+        balance.setBalance(100000L);
         balance.setUpdated_at(String.valueOf(new Date().getTime() / 1000));
 
         balanceRepository.save(balance);
     }
 
-    public Account info(long id){
+    public AccountInfoModel info(long id){
         Account account = accountRepository.findOneById(id);
-        account.setPassword(null);
-
-        return account;
+        List<RekInfo> rekening = rekeningInformationRepository.findRekInfoByAccount_id(id);
+        return new AccountInfoModel(account, rekening);
     }
 
     private Session saveSession(Account account){
@@ -92,11 +94,15 @@ public class AccountService {
         session.setAccount_id(account.getId());
         session.setUsername(account.getUsername());
         long timestamp = new Date().getTime() / 1000;
-        session.setToken(Base64.getEncoder().encodeToString((session.getUsername() + timestamp).getBytes()));
+        session.setToken(Base64.getEncoder().encodeToString((account.getId() + "|" + session.getUsername() + "|" + timestamp).getBytes()));
         session.setCreated_at(String.valueOf(timestamp));
         session.setExpired(String.valueOf(timestamp + 3600));
         session.setUsed(false);
 
         return sessionRepository.save(session);
+    }
+
+    public RekInfo checkByRekNumber(String rekNumber) {
+        return rekeningInformationRepository.findRekInfoByNomor_rekening(rekNumber);
     }
 }

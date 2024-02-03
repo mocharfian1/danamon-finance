@@ -16,6 +16,9 @@ public class Session {
     @Column(name = "username")
     private String username;
 
+    @Column(name = "referencetoken")
+    private String referencetoken;
+
     @Column(name = "token")
     private String token;
 
@@ -51,6 +54,14 @@ public class Session {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getReferencetoken() {
+        return referencetoken;
+    }
+
+    public void setReferencetoken(String referencetoken) {
+        this.referencetoken = referencetoken;
     }
 
     public String getToken() {

@@ -15,13 +15,6 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="Arfian" id="insert-account">
-        <insert tableName="account">
-            <column name="username" value="arfian"/>
-            <column name="password" value="arfian"/>
-        </insert>
-    </changeSet>
-
     <changeSet  id="6"  author="Arfian">
         <createTable tableName="rekening">
             <column  name="id"  type="bigint"  autoIncrement="true">
@@ -41,6 +34,7 @@
             </column>
             <column  name="account_id"  type="bigint" />
             <column  name="username"  type="varchar(50)" />
+            <column  name="referencetoken"  type="varchar(50)"/>
             <column  name="token"  type="varchar(50)"/>
             <column  name="created_at"  type="varchar(50)"/>
             <column  name="expired"  type="varchar(50)"/>

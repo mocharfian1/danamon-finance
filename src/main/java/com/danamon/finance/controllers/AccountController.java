@@ -1,5 +1,6 @@
 package com.danamon.finance.controllers;
 
+import com.danamon.finance.models.AccountInfoModel;
 import com.danamon.finance.models.LoginResponseModel;
 import com.danamon.finance.models.ResponseApiModel;
 import com.danamon.finance.models.entities.Session;
@@ -54,24 +55,24 @@ public class AccountController {
     }
 
     @PostMapping(value = "/info")
-    public ResponseEntity<ResponseApiModel<Account>> info(@RequestHeader("x-token") String currentToken){
+    public ResponseEntity<ResponseApiModel<AccountInfoModel>> info(@RequestHeader("x-token") String currentToken){
         try{
             Session newToken = sessionService.generateSession(currentToken);
             if(newToken != null){
                 HttpHeaders responseHeaders = new HttpHeaders();
                 responseHeaders.set("x-token", newToken.getToken());
 
-                Account getLoginAccount = accountService.info(newToken.getAccount_id());
-                return ResponseEntity.ok().headers(responseHeaders).body(new ResponseApiModel<Account>(
+                AccountInfoModel getLoginAccount = accountService.info(newToken.getAccount_id());
+                return ResponseEntity.ok().headers(responseHeaders).body(new ResponseApiModel<AccountInfoModel>(
                         HttpStatus.OK.value(), "Success get information", getLoginAccount
                 ));
             }
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
-                    new ResponseApiModel<Account>(HttpStatus.UNAUTHORIZED.value(), "UNAUTHORIZED", null )
+                    new ResponseApiModel<AccountInfoModel>(HttpStatus.UNAUTHORIZED.value(), "UNAUTHORIZED", null )
             );
         } catch (Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
-                    new ResponseApiModel<Account>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Internal Server Error", null )
+                    new ResponseApiModel<AccountInfoModel>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Internal Server Error", null )
             );
         }
     }

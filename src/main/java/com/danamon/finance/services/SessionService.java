@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Date;
 
@@ -26,11 +27,13 @@ public class SessionService {
     public Session generateSession(String currentToken){
         Session currentSession = sessionRepository.findByToken(currentToken);
         if(currentSession != null){
+            String decode = new String(Base64.getDecoder().decode(currentToken), StandardCharsets.UTF_8);
+            String account_id = decode.split("\\|")[0];
             long currentTimestamp = new Date().getTime() / 1000;
             long expiredDateTime = Long.parseLong(currentSession.getExpired());
             boolean isUsed = currentSession.getUsed();
 
-            if(currentTimestamp < expiredDateTime && !isUsed){
+            if(currentTimestamp < expiredDateTime && !isUsed && String.valueOf(currentSession.getAccount_id()).equals(account_id)){
                 Account resAccount = accountRepository.findOneById(currentSession.getAccount_id());
                 sessionRepository.delete(currentSession);
                 return saveSession(resAccount);
@@ -45,7 +48,7 @@ public class SessionService {
         session.setAccount_id(account.getId());
         session.setUsername(account.getUsername());
         long timestamp = new Date().getTime() / 1000;
-        session.setToken(Base64.getEncoder().encodeToString((session.getUsername() + timestamp).getBytes()));
+        session.setToken(Base64.getEncoder().encodeToString((account.getId() + "|" + session.getUsername() + "|" + timestamp).getBytes()));
         session.setCreated_at(String.valueOf(timestamp));
         session.setExpired(String.valueOf(timestamp + expToken));
         session.setUsed(false);
